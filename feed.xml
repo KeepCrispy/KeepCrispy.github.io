@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-21T14:18:13-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Keeping it Crispy</title><subtitle>AreWhyW, Security researcher</subtitle><author><name>AreWhyW</name></author><entry><title type="html">Powershell AMSI Lab - evading using obfuscation and detection POC</title><link href="http://localhost:4000/AMSIProj" rel="alternate" type="text/html" title="Powershell AMSI Lab - evading using obfuscation and detection POC" /><published>2023-04-21T00:00:00-07:00</published><updated>2023-04-21T00:00:00-07:00</updated><id>http://localhost:4000/AMSIProj</id><content type="html" xml:base="http://localhost:4000/AMSIProj">&lt;p&gt;I’m pretty sure many developers like me have came across their code being flagged by windows defender as a virus or malware strictly because it was just doing its job accessing system functions or making a TCP connection to the network service. Having been frustrated by this many times, I wanted to figure out why my legit working code is being flagged with a false positive, while threat actors are able to bypass this security completely.&lt;/p&gt;
+
+&lt;p&gt;The Anti-Malware Scan Interface (AMSI) is a security technology built into the Windows 10 operating system. This interface serves as an open platform for allowing antivirus software to interact with Windows 10, allowing the antivirus program to detect and respond to malicious code. This helps to protect users from malicious software and provide a safer computing environment. AMSI is an essential tool for antivirus programs, as it allows them to detect and block malicious code more effectively. The interface also allows for more accurate detection of malicious code and provides more detailed information about the threats that are detected. This allows antivirus programs to more effectively protect users from threats, as well as provide a more secure computing experience.&lt;/p&gt;
+
+&lt;p&gt;If you look closely into Anti-Malware Scan Interface (AMSI) evasion vulnerabilities published over the years, extensive work has been put into this. For example, I have looked into and tried to replicate some of these findings such as trying to encrypt the payload and decrypting them in memory inside PowerShell. I have also looked into splitting up the payload scripts and recombining them, which has been patched by Microsoft to prevent this attack vector. I have also looked into different PowerShell encoding techniques using open source tools. I also tried embedding the payload inside another executable, and found that the AMSI will no longer be able to catch the embedded code from being copied. However in memory, it will still flag it when executed.&lt;/p&gt;
+
+&lt;p&gt;All these techniques were used by threat actors to bypass AMSI detection and it is important to be aware of them in order to understand attack vectors.&lt;/p&gt;
+
+&lt;p&gt;LeoX Aka ProxyBlade wrote a great detailed write-up on his findings for AMSI detection and his trial and error process. &lt;a href=&quot;https://medium.com/bugbountywriteup/how-i-am-winning-battle-with-windows-10-and-11-security-and-avoiding-detection-6ea9f954b2a7&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;link to his write-up&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Panagiotis Chartas also made a great &lt;a href=&quot;https://www.youtube.com/watch?v=tGFdmAh_lXE&quot;&gt;video guide on obfuscation techniques&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Based on their findings and testing for different encryptions, seems that AMSI now scans for the code’s content for anything suspicious before it is executed.&lt;/p&gt;
+
+&lt;p&gt;LeoX also made a great POC called &lt;a href=&quot;https://github.com/pr0xy-8L4d3/EvilRAT&quot;&gt;EvilRat&lt;/a&gt; for his writeup and it does the job to test for this vulnerability.&lt;/p&gt;
+
+&lt;p&gt;Some could argue that it’s just some obfuscated code and can easily be identified using definitions profiling. The problem though is much deeper, as any developer would know the same code can be designed with different flavours, some more efficient than others. Than there’s the problem that a complex shell can be made out of many different variables, and logic can always be obfuscated with purposely placed bad code design.&lt;/p&gt;
+
+&lt;p&gt;So what happens when you obfuscate the code so much so that it’s unrecognizable? What if you have variables of varying lengths, comprised of numbers, underscore and alphabets?&lt;/p&gt;
+
+&lt;p&gt;What if your shell script execution order, and variable names are always changing? What if you employ alternate function calls to your methods? or add replace random error catchers?&lt;/p&gt;
+
+&lt;p&gt;It’s a recipe for disaster and the possibilities for exploiting this is almost limitless.&lt;/p&gt;
+
+&lt;p&gt;LeoX and Panagiotis discovered a gaping vulnerability that at present can be exploited using very simple obscuration without the need of heavy lifting Red Team tools.&lt;/p&gt;
+
+&lt;p&gt;On top of that, it makes it super easy to implement a randomized file obscurator using basic programming string manipulation.&lt;/p&gt;
+
+&lt;p&gt;If a threat actor took advantage of this, their powershell scripts will easily fly under the radar. This means, until this is patched, it’s crucial to harden your network infrastructure and make sure it’s properly configured with good access control.&lt;/p&gt;
+
+&lt;p&gt;Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/launchpsx_amsi1.png&quot; alt=&quot;psx running custom payload&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;and what the reverse shell looks like once launched.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/customps_amsi1.png&quot; alt=&quot;reverse&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Final thoughts on remdiation strategies&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Obfuscation techniques include randomizing variable names, padding with more logic and inserting wrapper logic around the executed scripts. Because of the small file size requirement for most payloads to fly undetected when logged, it is likely that the core execution steps are unchanged to keep things compact. Thus even if the variable lengths changes, the logical pattern of function calls, and assigning variable values are likely unchanged when additional information is padded on. Making it somewhat trivial to flag by scanning the program for execution logic patterns.&lt;/p&gt;
+
+&lt;p&gt;I’ve wrote a simple &lt;a href=&quot;https://github.com/KeepCrispy/Linear-Content-Scanner&quot;&gt;POC Linear-Content-Scanner&lt;/a&gt; to test this idea. Feel free to rift off the idea, though I would recommend using a more robust DevSecOps solution.&lt;/p&gt;
+
+&lt;p&gt;It is always good practice to be engaging in DevSecOps to ensure the deployment pipeline and environments are monitored for integrity.&lt;/p&gt;
+
+&lt;p&gt;Checking server and operating system access logs is a good way to determine if there has been any malicious activity on the system. However, it is important to note that depending on the type of malware used, it may be difficult to detect the malicious activity in the logs.&lt;/p&gt;
+
+&lt;p&gt;It is always best to take preventative measures. This can include regularly auditing and patching the system. Making sure to regularly review access control measures. Additionally, it is important to ensure that users are following best practices when it comes to online security, such as using strong passwords and avoiding suspicious links and downloads.&lt;/p&gt;</content><author><name>AreWhyW</name></author><category term="Example Posts" /><category term="AMSI" /><category term="Powershell" /><summary type="html">I’m pretty sure many developers like me have came across their code being flagged by windows defender as a virus or malware strictly because it was just doing its job accessing system functions or making a TCP connection to the network service. Having been frustrated by this many times, I wanted to figure out why my legit working code is being flagged with a false positive, while threat actors are able to bypass this security completely.</summary></entry></feed>

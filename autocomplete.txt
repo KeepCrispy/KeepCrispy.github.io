@@ -1,0 +1,1 @@
+Powershell AMSI Lab - evading using obfuscation and detection POC;

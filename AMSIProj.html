@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Jekyll">
+    <link rel="license" href="LICENSE">
+
+    <meta name="application-name" content="Keeping it Crispy">
+    <meta name="theme-color" content="">
+    <link rel="archives" href="http://localhost:4000/archives/">
+
+    <meta name="robots" content="index,follow"> <!-- All Search Engines -->
+    <meta name="googlebot" content="index,follow"><!-- Google Specific    -->
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="/assets/main.css">
+    <link rel="stylesheet" href="/assets/code.css">
+    <script src="https://kit.fontawesome.com/e9dddf84a6.js" crossorigin="anonymous"></script>
+    <link rel="alternate" type="application/rss+xml" href="http://localhost:4000/feed.xml">
+</head>
+<body>
+
+    <div id="layout" class="pure-g"><aside class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="sidebar-info">
+        <a href="/">
+            <span hidden>Keeping it Crispy
+                Header Image</span>
+            <img class="brand-photo" src="http://localhost:4000/assets/profile.png" alt="Photo of AreWhyW"/>
+        </a>
+        <h1 class="brand-title">
+            <a href="/">Keeping it Crispy</a>
+        </h1>
+        <h2 class="brand-tagline">AreWhyW, Security researcher</h2>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a class="pure-button" href="http://localhost:4000">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="http://localhost:4000/notes">Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="http://localhost:4000/journals">Journal</a>
+                </li>
+            </ul>
+        </nav>
+        
+    </div>
+</aside>
+<div class="content pure-u-1 pure-u-md-3-4">
+            <div class="md-display">
+                <h1>
+                    <a class="jekyll-header" href="/">Keeping it Crispy</a>
+                </h1><div class="menu">
+    <div class="about">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="hashtags">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="categories">
+        <a href="/categories">
+            <i class="far fa-folder-open"></i>
+            Categories
+        </a>
+    </div>
+    <div class="archive">
+        <a href="/archive">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+</div>
+<div id="search">
+    <label>
+        <span class="search-icon">🔎</span>
+        <input autocomplete="off" id="search-input" oninput="changeResultContainerDisp(this.value)" placeholder="Search all articles..." type="text"/>
+    </label>
+
+    <ul id="results-container" style="display: none"></ul>
+</div>
+<script src="/assets/simple-jekyll-search.js"></script>
+<script>
+    function changeResultContainerDisp(val) {
+        if (val) {
+            document
+                .getElementById("results-container")
+                .style
+                .display = "block";
+            document.getElementById("search-input").addEventListener("blur", function () {
+                document.addEventListener("click", function (event) {
+                    var isClickInside = document.getElementById("results-container").contains(event.target);
+                    if (! isClickInside) {
+                        document
+                            .getElementById("results-container")
+                            .style
+                            .display = "none";
+                    }
+                })
+            })
+        } else {
+            document
+                .getElementById("results-container")
+                .style
+                .display = "none";
+        }
+    }
+    var sjs = SimpleJekyllSearch({
+        searchInput: document.getElementById("search-input"),
+        resultsContainer: document.getElementById("results-container"),
+        json: "/search.json",
+        searchResultTemplate: "<li class='search_res' style='list-style: none;'><a href='http://localhost:4000{url}' color: #555555;'><p><strong>></strong> {title}</p></a></li>",
+        noResultsText: "No results found. Try another search.",
+        fuzzy: false,
+        limit: 5
+    })
+</script></div>
+            <div>
+                <article class="post-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">Powershell AMSI Lab - evading using obfuscation and detection POC</h2><p><time datetime="2023-04-21T00:00:00-07:00" itemprop="datePublished">
+        Apr 21, 2023
+    </time>&#8239;
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">By: AreWhyW</span></span>&#8239;|&#8239;<a href="/tags/#AMSI">#AMSI</a> &#8239;<a href="/tags/#Powershell">#Powershell</a> &#8239;</p></header>
+
+    <div articlebody" class="post-body itemprop=">
+        <p>I’m pretty sure many developers like me have came across their code being flagged by windows defender as a virus or malware strictly because it was just doing its job accessing system functions or making a TCP connection to the network service. Having been frustrated by this many times, I wanted to figure out why my legit working code is being flagged with a false positive, while threat actors are able to bypass this security completely.</p>
+
+<p>The Anti-Malware Scan Interface (AMSI) is a security technology built into the Windows 10 operating system. This interface serves as an open platform for allowing antivirus software to interact with Windows 10, allowing the antivirus program to detect and respond to malicious code. This helps to protect users from malicious software and provide a safer computing environment. AMSI is an essential tool for antivirus programs, as it allows them to detect and block malicious code more effectively. The interface also allows for more accurate detection of malicious code and provides more detailed information about the threats that are detected. This allows antivirus programs to more effectively protect users from threats, as well as provide a more secure computing experience.</p>
+
+<p>If you look closely into Anti-Malware Scan Interface (AMSI) evasion vulnerabilities published over the years, extensive work has been put into this. For example, I have looked into and tried to replicate some of these findings such as trying to encrypt the payload and decrypting them in memory inside PowerShell. I have also looked into splitting up the payload scripts and recombining them, which has been patched by Microsoft to prevent this attack vector. I have also looked into different PowerShell encoding techniques using open source tools. I also tried embedding the payload inside another executable, and found that the AMSI will no longer be able to catch the embedded code from being copied. However in memory, it will still flag it when executed.</p>
+
+<p>All these techniques were used by threat actors to bypass AMSI detection and it is important to be aware of them in order to understand attack vectors.</p>
+
+<p>LeoX Aka ProxyBlade wrote a great detailed write-up on his findings for AMSI detection and his trial and error process. <a href="https://medium.com/bugbountywriteup/how-i-am-winning-battle-with-windows-10-and-11-security-and-avoiding-detection-6ea9f954b2a7" target="_blank" rel="noopener noreferrer">link to his write-up</a></p>
+
+<p>Panagiotis Chartas also made a great <a href="https://www.youtube.com/watch?v=tGFdmAh_lXE">video guide on obfuscation techniques</a></p>
+
+<p>Based on their findings and testing for different encryptions, seems that AMSI now scans for the code’s content for anything suspicious before it is executed.</p>
+
+<p>LeoX also made a great POC called <a href="https://github.com/pr0xy-8L4d3/EvilRAT">EvilRat</a> for his writeup and it does the job to test for this vulnerability.</p>
+
+<p>Some could argue that it’s just some obfuscated code and can easily be identified using definitions profiling. The problem though is much deeper, as any developer would know the same code can be designed with different flavours, some more efficient than others. Than there’s the problem that a complex shell can be made out of many different variables, and logic can always be obfuscated with purposely placed bad code design.</p>
+
+<p>So what happens when you obfuscate the code so much so that it’s unrecognizable? What if you have variables of varying lengths, comprised of numbers, underscore and alphabets?</p>
+
+<p>What if your shell script execution order, and variable names are always changing? What if you employ alternate function calls to your methods? or add replace random error catchers?</p>
+
+<p>It’s a recipe for disaster and the possibilities for exploiting this is almost limitless.</p>
+
+<p>LeoX and Panagiotis discovered a gaping vulnerability that at present can be exploited using very simple obscuration without the need of heavy lifting Red Team tools.</p>
+
+<p>On top of that, it makes it super easy to implement a randomized file obscurator using basic programming string manipulation.</p>
+
+<p>If a threat actor took advantage of this, their powershell scripts will easily fly under the radar. This means, until this is patched, it’s crucial to harden your network infrastructure and make sure it’s properly configured with good access control.</p>
+
+<p>Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab.</p>
+
+<p><img src="/assets/launchpsx_amsi1.png" alt="psx running custom payload" /></p>
+
+<p>and what the reverse shell looks like once launched.</p>
+
+<p><img src="/assets/customps_amsi1.png" alt="reverse" /></p>
+
+<p><strong>Final thoughts on remdiation strategies</strong></p>
+
+<p>Obfuscation techniques include randomizing variable names, padding with more logic and inserting wrapper logic around the executed scripts. Because of the small file size requirement for most payloads to fly undetected when logged, it is likely that the core execution steps are unchanged to keep things compact. Thus even if the variable lengths changes, the logical pattern of function calls, and assigning variable values are likely unchanged when additional information is padded on. Making it somewhat trivial to flag by scanning the program for execution logic patterns.</p>
+
+<p>I’ve wrote a simple <a href="https://github.com/KeepCrispy/Linear-Content-Scanner">POC Linear-Content-Scanner</a> to test this idea. Feel free to rift off the idea, though I would recommend using a more robust DevSecOps solution.</p>
+
+<p>It is always good practice to be engaging in DevSecOps to ensure the deployment pipeline and environments are monitored for integrity.</p>
+
+<p>Checking server and operating system access logs is a good way to determine if there has been any malicious activity on the system. However, it is important to note that depending on the type of malware used, it may be difficult to detect the malicious activity in the logs.</p>
+
+<p>It is always best to take preventative measures. This can include regularly auditing and patching the system. Making sure to regularly review access control measures. Additionally, it is important to ensure that users are following best practices when it comes to online security, such as using strong passwords and avoiding suspicious links and downloads.</p>
+
+
+    </div><div id="author">
+    <h3>About
+        AreWhyW</h3>
+    <img src="assets/profile.png" alt="Photo of AreWhyW"/>
+    <p>Hi there, I'm a security engineer and researcher.  I have a strong background in software engineering, so I am familiar with developing secure code, and have experience in conducting code reviews and application security testing.</p>
+</div><a class="u-url" href="/AMSIProj" hidden></a>
+</article><hr/>
+
+<footer class="footer">
+    <div class="pure-menu pure-menu-horizontal">
+        <ul>
+            <li class="pure-menu-item">
+                <a class="pure-menu-link" href="/">
+                    <i class="fas fa-home"></i>
+                    <span class="md-display">Home</span>
+                </a>
+            </li>
+
+            <li class="pure-menu-item">
+                <a class="pure-menu-link" href="https://github.com/keepcrispy">
+                    <i class="fab fa-github"></i>
+                    <span class="md-display">GitHub</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>
+</div>
+        </div>
+    </div>
+
+</body>
+
+</html>
