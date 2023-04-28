@@ -1,1 +1,1 @@
-Powershell AMSI Lab - evading using obfuscation and detection POC;
+Setting up and running Snort on Ubuntu;Powershell AMSI Lab - evading using obfuscation and detection POC;

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Jekyll">
+    <link rel="license" href="LICENSE">
+
+    <meta name="application-name" content="Keeping it Crispy">
+    <meta name="theme-color" content="">
+    <link rel="archives" href="http://localhost:4000/archives/">
+
+    <meta name="robots" content="index,follow"> <!-- All Search Engines -->
+    <meta name="googlebot" content="index,follow"><!-- Google Specific    -->
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="/assets/main.css">
+    <link rel="stylesheet" href="/assets/code.css">
+    <script src="https://kit.fontawesome.com/e9dddf84a6.js" crossorigin="anonymous"></script>
+    <link rel="alternate" type="application/rss+xml" href="http://localhost:4000/feed.xml">
+</head>
+<body>
+
+    <div id="layout" class="pure-g"><aside class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="sidebar-info">
+        <a href="/">
+            <span hidden>Keeping it Crispy
+                Header Image</span>
+            <img class="brand-photo" src="/assets/profile.png" alt="Photo of AreWhyW"/>
+        </a>
+        <h1 class="brand-title">
+            <a href="/">Keeping it Crispy</a>
+        </h1>
+        <h2 class="brand-tagline">AreWhyW, Security Engineer, Researcher</h2>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a class="pure-button" href="http://localhost:4000">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="http://localhost:4000/notes">Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pure-button" href="http://localhost:4000/journals">Journal</a>
+                </li>
+            </ul>
+        </nav>
+        
+    </div>
+</aside>
+<div class="content pure-u-1 pure-u-md-3-4">
+            <div class="md-display">
+                <h1>
+                    <a class="jekyll-header" href="/">Keeping it Crispy</a>
+                </h1><div class="menu">
+    <div class="about">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="hashtags">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="categories">
+        <a href="/categories">
+            <i class="far fa-folder-open"></i>
+            Categories
+        </a>
+    </div>
+    <div class="archive">
+        <a href="/archive">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+</div>
+<div id="search">
+    <label>
+        <span class="search-icon">🔎</span>
+        <input autocomplete="off" id="search-input" oninput="changeResultContainerDisp(this.value)" placeholder="Search all articles..." type="text"/>
+    </label>
+
+    <ul id="results-container" style="display: none"></ul>
+</div>
+<script src="/assets/simple-jekyll-search.js"></script>
+<script>
+    function changeResultContainerDisp(val) {
+        if (val) {
+            document
+                .getElementById("results-container")
+                .style
+                .display = "block";
+            document.getElementById("search-input").addEventListener("blur", function () {
+                document.addEventListener("click", function (event) {
+                    var isClickInside = document.getElementById("results-container").contains(event.target);
+                    if (! isClickInside) {
+                        document
+                            .getElementById("results-container")
+                            .style
+                            .display = "none";
+                    }
+                })
+            })
+        } else {
+            document
+                .getElementById("results-container")
+                .style
+                .display = "none";
+        }
+    }
+    var sjs = SimpleJekyllSearch({
+        searchInput: document.getElementById("search-input"),
+        resultsContainer: document.getElementById("results-container"),
+        json: "/search.json",
+        searchResultTemplate: "<li class='search_res' style='list-style: none;'><a href='http://localhost:4000{url}' color: #555555;'><p><strong>></strong> {title}</p></a></li>",
+        noResultsText: "No results found. Try another search.",
+        fuzzy: false,
+        limit: 5
+    })
+</script></div>
+            <div>
+                <article class="post-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">Setting up and running Snort on Ubuntu</h2><p><time datetime="2023-04-28T00:00:00-07:00" itemprop="datePublished">
+        Apr 28, 2023
+    </time>&#8239;
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">By: AreWhyW</span></span>&#8239;|&#8239;<a href="/tags/#Snort">#Snort</a> &#8239;<a href="/tags/#EDR">#EDR</a> &#8239;<a href="/tags/#DevSecOps">#DevSecOps</a> &#8239;</p></header>
+
+    <div articlebody" class="post-body itemprop=">
+        <p>Snort can be considered an EDR (Endpoint Detection and Response) system. An EDR system is a type of security monitoring system that is used to detect and respond to malicious activity on a network. Snort uses a combination of rules and signatures to detect malicious behavior, and can be used to alert system administrators of suspicious activity.</p>
+
+<p>Today, I’m going to share my knowledge on setting up Snort! Snort is a powerful tool for intrusion detection and prevention. I will explain the steps needed to setup Snort on your network and walk you through configuring snort and testing your setup. I’ll also provide helpful tips and tricks that will help you get the most out of Snort.</p>
+
+<p>First make sure your system is up to date:
+sudo apt update
+sudo apt upgrade</p>
+
+<p>To install on Ubuntu use the following command:
+sudo apt install snort</p>
+
+<p>Next we want to configure Ubuntu’s network settings to allow the snort traffic to be monitored</p>
+
+<p>Edit /etc/sysctl.conf and add the following lines:</p>
+
+<ul>
+  <li>net.ipv4.conf.default.accept_source_route = 0</li>
+  <li>net.ipv4.conf.all.accept_source_route = 0</li>
+  <li>net.ipv4.conf.default.accept_redirects = 0</li>
+  <li>net.ipv4.conf.all.accept_redirects = 0</li>
+  <li>net.ipv4.conf.default.send_redirects = 0</li>
+  <li>net.ipv4.conf.all.send_redirects = 0</li>
+  <li>net.ipv4.conf.default.rp_filter = 1</li>
+  <li>net.ipv4.conf.all.rp_filter = 1</li>
+</ul>
+
+<p>The rp_filter setting in the sysctl.conf file determines whether or not the kernel will accept reverse path filtering on the network traffic. Reverse path filtering ensures that incoming packets are coming from the same source as the reply packets. This is important for network security, as it helps to prevent malicious packets from entering the network. We want this turned on.</p>
+
+<p>We want to turn on the rp_filter setting in the sysctl.conf file for Snort because it helps to protect against malicious packets entering the network. By enabling reverse path filtering, Snort can more accurately detect and respond to malicious activity on the network, as it can detect when incoming packets are not from the same source as the reply packets.</p>
+
+<p><img src="/assets/snort1.png" alt="systemctl config" /></p>
+
+<p>Next we will need to update the snort config file. This where we tell snort how to process the traffic, what traffic to look for, and when and how to output alerts.</p>
+
+<p>Locating the snort config:</p>
+
+<p><img src="/assets/snort2.png" alt="snort config" /></p>
+
+<p>Snort config location:</p>
+
+<p><img src="/assets/snort3.png" alt="snort config" /></p>
+
+<p>#config information</p>
+
+<p>the config does several things setup network traffic you want to scan, the port traffics you want to scan, what to scan and the rules you want to scan against, and finally the outputs you want to log to.</p>
+
+<p>things it can scan for:</p>
+<ul>
+  <li>active scanning</li>
+  <li>shellcode rules</li>
+  <li>suspicious TCP/UDP traffic</li>
+  <li>suspicious connections to your web/ssh/ftp/smb servers or outwards</li>
+</ul>
+
+<p>Here is a look at it’s basic port conifigurations:</p>
+
+<p><img src="/assets/snort4.png" alt="snort config" /></p>
+
+<p>reading through the config you will come across some preprocessor and decoder configurations as well.</p>
+
+<p>The Snort decoder and preprocessors are responsible for decoding and processing packets as they are received. The decoder is responsible for breaking down the packets into their individual headers, while the preprocessors perform tasks such as stream reassembly, protocol normalization, and port scanning detection. Together, they allow Snort to accurately detect and respond to malicious activity.</p>
+
+<p>Finally the part that makes snort shine is the output plugin settings. The output plugin allows you to automate piping alerts to your desired file/webapp for logging purposes</p>
+
+<p>here are a few output formats:</p>
+<ul>
+  <li>xml, cvs,unified outputs, and system logs</li>
+</ul>
+
+<p>Unified binary output can be used with something like Barnyard for additional features such as JSON support for web api integration</p>
+
+<p>You can also create a basic CSV using</p>
+<ul>
+  <li>output alert_csv: filename (options seperated by commas)</li>
+</ul>
+
+<p>Most of these settings can be left as default for now. But, you will want to install PullPork aftwards for the ability to automatically update community’s rules for instrusion detection.</p>
+
+<p>Finally, after setting the above up. you will need to be root to access your network interfaces when running Snort.</p>
+
+<p>use the following command for snort:</p>
+<ul>
+  <li>sudo snort -i <network interface=""> -v -c /etc/snort/snort.conf</network></li>
+</ul>
+
+<p><img src="/assets/snort5.png" alt="snort running" /></p>
+
+<p>Snort outputs alerts in the terminal when it detects suspicious activity on a network. This could be anything from a malicious scan to an attack attempt. The output is a text-based alert that includes information such as the source and destination IP addresses, the protocol used, and any related alert message.</p>
+
+<p>Here are additional sources and documentation for further customizing snort.</p>
+<ul>
+  <li><a href="https://www.snort.org/documents">Snort Official Documentation - https://www.snort.org/documents</a></li>
+  <li><a href="https://github.com/shirkdog/pulledpork">Shirkdog’s PulledPork project - https://github.com/shirkdog/pulledpork</a></li>
+  <li><a href="https://github.com/firnsy/barnyard2">firnsy’s Barnyard Spooler for JSON alert outputs - https://github.com/firnsy/barnyard2</a></li>
+</ul>
+
+
+    </div><div id="author">
+    <h3>About
+        AreWhyW</h3>
+    <img src="assets/profile.png" alt="Photo of AreWhyW"/>
+    <p>Hi there, I'm a security engineer and researcher.  I have a background in software engineering, so I am familiar with developing secure code, and have experience in conducting code reviews and application security testing.</p>
+</div><a class="u-url" href="/SnortLab" hidden></a>
+</article><hr/>
+
+<footer class="footer">
+    <div class="pure-menu pure-menu-horizontal">
+        <ul>
+            <li class="pure-menu-item">
+                <a class="pure-menu-link" href="/">
+                    <i class="fas fa-home"></i>
+                    <span class="md-display">Home</span>
+                </a>
+            </li>
+
+            <li class="pure-menu-item">
+                <a class="pure-menu-link" href="https://github.com/keepcrispy">
+                    <i class="fab fa-github"></i>
+                    <span class="md-display">GitHub</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>
+</div>
+        </div>
+    </div>
+
+</body>
+
+</html>

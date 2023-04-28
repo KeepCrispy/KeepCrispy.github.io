@@ -1,4 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-21T14:33:07-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Keeping it Crispy</title><subtitle>AreWhyW, Security Engineer, Researcher</subtitle><author><name>AreWhyW</name></author><entry><title type="html">Powershell AMSI Lab - evading using obfuscation and detection POC</title><link href="http://localhost:4000/AMSIProj" rel="alternate" type="text/html" title="Powershell AMSI Lab - evading using obfuscation and detection POC" /><published>2023-04-21T00:00:00-07:00</published><updated>2023-04-21T00:00:00-07:00</updated><id>http://localhost:4000/AMSIProj</id><content type="html" xml:base="http://localhost:4000/AMSIProj">&lt;p&gt;I’m pretty sure many developers like me have came across their code being flagged by windows defender as a virus or malware strictly because it was just doing its job accessing system functions or making a TCP connection to the network service. Having been frustrated by this many times, I wanted to figure out why my legit working code is being flagged with a false positive, while threat actors are able to bypass this security completely.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-28T14:36:27-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Keeping it Crispy</title><subtitle>AreWhyW, Security Engineer, Researcher</subtitle><author><name>AreWhyW</name></author><entry><title type="html">Setting up and running Snort on Ubuntu</title><link href="http://localhost:4000/SnortLab" rel="alternate" type="text/html" title="Setting up and running Snort on Ubuntu" /><published>2023-04-28T00:00:00-07:00</published><updated>2023-04-28T00:00:00-07:00</updated><id>http://localhost:4000/SnortLab</id><content type="html" xml:base="http://localhost:4000/SnortLab">&lt;p&gt;Snort can be considered an EDR (Endpoint Detection and Response) system. An EDR system is a type of security monitoring system that is used to detect and respond to malicious activity on a network. Snort uses a combination of rules and signatures to detect malicious behavior, and can be used to alert system administrators of suspicious activity.&lt;/p&gt;
+
+&lt;p&gt;Today, I’m going to share my knowledge on setting up Snort! Snort is a powerful tool for intrusion detection and prevention. I will explain the steps needed to setup Snort on your network and walk you through configuring snort and testing your setup. I’ll also provide helpful tips and tricks that will help you get the most out of Snort.&lt;/p&gt;
+
+&lt;p&gt;First make sure your system is up to date:
+sudo apt update
+sudo apt upgrade&lt;/p&gt;
+
+&lt;p&gt;To install on Ubuntu use the following command:
+sudo apt install snort&lt;/p&gt;
+
+&lt;p&gt;Next we want to configure Ubuntu’s network settings to allow the snort traffic to be monitored&lt;/p&gt;
+
+&lt;p&gt;Edit /etc/sysctl.conf and add the following lines:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;net.ipv4.conf.default.accept_source_route = 0&lt;/li&gt;
+  &lt;li&gt;net.ipv4.conf.all.accept_source_route = 0&lt;/li&gt;
+  &lt;li&gt;net.ipv4.conf.default.accept_redirects = 0&lt;/li&gt;
+  &lt;li&gt;net.ipv4.conf.all.accept_redirects = 0&lt;/li&gt;
+  &lt;li&gt;net.ipv4.conf.default.send_redirects = 0&lt;/li&gt;
+  &lt;li&gt;net.ipv4.conf.all.send_redirects = 0&lt;/li&gt;
+  &lt;li&gt;net.ipv4.conf.default.rp_filter = 1&lt;/li&gt;
+  &lt;li&gt;net.ipv4.conf.all.rp_filter = 1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The rp_filter setting in the sysctl.conf file determines whether or not the kernel will accept reverse path filtering on the network traffic. Reverse path filtering ensures that incoming packets are coming from the same source as the reply packets. This is important for network security, as it helps to prevent malicious packets from entering the network. We want this turned on.&lt;/p&gt;
+
+&lt;p&gt;We want to turn on the rp_filter setting in the sysctl.conf file for Snort because it helps to protect against malicious packets entering the network. By enabling reverse path filtering, Snort can more accurately detect and respond to malicious activity on the network, as it can detect when incoming packets are not from the same source as the reply packets.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/snort1.png&quot; alt=&quot;systemctl config&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next we will need to update the snort config file. This where we tell snort how to process the traffic, what traffic to look for, and when and how to output alerts.&lt;/p&gt;
+
+&lt;p&gt;Locating the snort config:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/snort2.png&quot; alt=&quot;snort config&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Snort config location:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/snort3.png&quot; alt=&quot;snort config&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;#config information&lt;/p&gt;
+
+&lt;p&gt;the config does several things setup network traffic you want to scan, the port traffics you want to scan, what to scan and the rules you want to scan against, and finally the outputs you want to log to.&lt;/p&gt;
+
+&lt;p&gt;things it can scan for:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;active scanning&lt;/li&gt;
+  &lt;li&gt;shellcode rules&lt;/li&gt;
+  &lt;li&gt;suspicious TCP/UDP traffic&lt;/li&gt;
+  &lt;li&gt;suspicious connections to your web/ssh/ftp/smb servers or outwards&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here is a look at it’s basic port conifigurations:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/snort4.png&quot; alt=&quot;snort config&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;reading through the config you will come across some preprocessor and decoder configurations as well.&lt;/p&gt;
+
+&lt;p&gt;The Snort decoder and preprocessors are responsible for decoding and processing packets as they are received. The decoder is responsible for breaking down the packets into their individual headers, while the preprocessors perform tasks such as stream reassembly, protocol normalization, and port scanning detection. Together, they allow Snort to accurately detect and respond to malicious activity.&lt;/p&gt;
+
+&lt;p&gt;Finally the part that makes snort shine is the output plugin settings. The output plugin allows you to automate piping alerts to your desired file/webapp for logging purposes&lt;/p&gt;
+
+&lt;p&gt;here are a few output formats:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;xml, cvs,unified outputs, and system logs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Unified binary output can be used with something like Barnyard for additional features such as JSON support for web api integration&lt;/p&gt;
+
+&lt;p&gt;You can also create a basic CSV using&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;output alert_csv: filename (options seperated by commas)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most of these settings can be left as default for now. But, you will want to install PullPork aftwards for the ability to automatically update community’s rules for instrusion detection.&lt;/p&gt;
+
+&lt;p&gt;Finally, after setting the above up. you will need to be root to access your network interfaces when running Snort.&lt;/p&gt;
+
+&lt;p&gt;use the following command for snort:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;sudo snort -i &lt;network interface=&quot;&quot;&gt; -v -c /etc/snort/snort.conf&lt;/network&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/snort5.png&quot; alt=&quot;snort running&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Snort outputs alerts in the terminal when it detects suspicious activity on a network. This could be anything from a malicious scan to an attack attempt. The output is a text-based alert that includes information such as the source and destination IP addresses, the protocol used, and any related alert message.&lt;/p&gt;
+
+&lt;p&gt;Here are additional sources and documentation for further customizing snort.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.snort.org/documents&quot;&gt;Snort Official Documentation - https://www.snort.org/documents&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/shirkdog/pulledpork&quot;&gt;Shirkdog’s PulledPork project - https://github.com/shirkdog/pulledpork&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/firnsy/barnyard2&quot;&gt;firnsy’s Barnyard Spooler for JSON alert outputs - https://github.com/firnsy/barnyard2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>AreWhyW</name></author><category term="Example Posts" /><category term="Snort" /><category term="EDR" /><category term="DevSecOps" /><summary type="html">Snort can be considered an EDR (Endpoint Detection and Response) system. An EDR system is a type of security monitoring system that is used to detect and respond to malicious activity on a network. Snort uses a combination of rules and signatures to detect malicious behavior, and can be used to alert system administrators of suspicious activity.</summary></entry><entry><title type="html">Powershell AMSI Lab - evading using obfuscation and detection POC</title><link href="http://localhost:4000/AMSIProj" rel="alternate" type="text/html" title="Powershell AMSI Lab - evading using obfuscation and detection POC" /><published>2023-04-21T00:00:00-07:00</published><updated>2023-04-21T00:00:00-07:00</updated><id>http://localhost:4000/AMSIProj</id><content type="html" xml:base="http://localhost:4000/AMSIProj">&lt;p&gt;I’m pretty sure many developers like me have came across their code being flagged by windows defender as a virus or malware strictly because it was just doing its job accessing system functions or making a TCP connection to the network service. Having been frustrated by this many times, I wanted to figure out why my legit working code is being flagged with a false positive, while threat actors are able to bypass this security completely.&lt;/p&gt;
 
 &lt;p&gt;The Anti-Malware Scan Interface (AMSI) is a security technology built into the Windows 10 operating system. This interface serves as an open platform for allowing antivirus software to interact with Windows 10, allowing the antivirus program to detect and respond to malicious code. This helps to protect users from malicious software and provide a safer computing environment. AMSI is an essential tool for antivirus programs, as it allows them to detect and block malicious code more effectively. The interface also allows for more accurate detection of malicious code and provides more detailed information about the threats that are detected. This allows antivirus programs to more effectively protect users from threats, as well as provide a more secure computing experience.&lt;/p&gt;
 
