@@ -163,11 +163,11 @@ sudo apt install snort</p>
 
 <p>The rp_filter setting in the sysctl.conf file determines whether or not the kernel will accept reverse path filtering on the network traffic. Reverse path filtering ensures that incoming packets are coming from the same source as the reply packets. This is important for network security, as it helps to prevent malicious packets from entering the network. We want this turned on.</p>
 
-<p>We want to turn on the rp_filter setting in the sysctl.conf file for Snort because it helps to protect against malicious packets entering the network. By enabling reverse path filtering, Snort can more accurately detect and respond to malicious activity on the network, as it can detect when incoming packets are not from the same source as the reply packets.</p>
+<p>We want to turn on the rp_filter setting in the sysctl.conf file for snort because it helps to protect against malicious packets entering the network. By enabling reverse path filtering, snort can more accurately detect and respond to malicious activity on the network, as it can detect when incoming packets are not from the same source as the reply packets.</p>
 
 <p><img src="/assets/snort1.png" alt="systemctl config" /></p>
 
-<p>Next we will need to update the snort config file. This where we tell snort how to process the traffic, what traffic to look for, and when and how to output alerts.</p>
+<p>Next we will need to update the snort config file. This is where we tell snort how to process the traffic, what traffic to look for, and when and how to output alerts.</p>
 
 <p>Locating the snort config:</p>
 
@@ -195,7 +195,7 @@ sudo apt install snort</p>
 
 <p>reading through the config you will come across some preprocessor and decoder configurations as well.</p>
 
-<p>The Snort decoder and preprocessors are responsible for decoding and processing packets as they are received. The decoder is responsible for breaking down the packets into their individual headers, while the preprocessors perform tasks such as stream reassembly, protocol normalization, and port scanning detection. Together, they allow Snort to accurately detect and respond to malicious activity.</p>
+<p>The Snort decoder and preprocessors are responsible for decoding and processing packets as they are received. The decoder is responsible for breaking down the packets into their individual headers, while the preprocessors perform tasks such as stream reassembly, protocol normalization, and port scanning detection. Together, they allow snort to accurately detect and respond to malicious activity.</p>
 
 <p>Finally the part that makes snort shine is the output plugin settings. The output plugin allows you to automate piping alerts to your desired file/webapp for logging purposes</p>
 
@@ -206,7 +206,7 @@ sudo apt install snort</p>
 
 <p>Unified binary output can be used with something like Barnyard for additional features such as JSON support for web api integration</p>
 
-<p>You can also create a basic CSV using</p>
+<p>You can also create a basic CSV using:</p>
 <ul>
   <li>output alert_csv: filename (options seperated by commas)</li>
 </ul>
