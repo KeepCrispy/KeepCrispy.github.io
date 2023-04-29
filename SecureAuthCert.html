@@ -125,44 +125,37 @@
     })
 </script></div>
             <div>
-                <article class="page post-entry">
+                <article class="post-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-    <header>
-        <h1>Organized by Category</h1>
-    </header>
+    <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates</h2><p><time datetime="2023-04-28T00:00:00-07:00" itemprop="datePublished">
+        Apr 28, 2023
+    </time>&#8239;
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">By: AreWhyW</span></span>&#8239;|&#8239;<a href="/tags/#Access Control">#Access Control</a> &#8239;<a href="/tags/#DevSecOps">#DevSecOps</a> &#8239;</p></header>
 
-    <div class="page-content">
-        <style>
-.category-content a {
-    text-decoration: none;
-    color: #4183c4;
-}
+    <div articlebody" class="post-body itemprop=">
+        <p>In this project, I wanted to explore the use of a CBC (Cipher Block Chaining) block cipher to generate encrypted certificates with customizable expiry dates. This system creates a primary server authority certificate which is then used to generate additional access certificates. This provides a secure and reliable way of granting access to services and ensuring that the access is only granted for a specified amount of time.</p>
 
-.category-content a:hover {
-    text-decoration: underline;
-    color: #4183c4;
-}
-</style>
+<p>Access granting certificates are an important part of our digital security and are used to control access to services, websites, and other online resources. They are often used in authentication protocols such as OAuth and Kerberos to help protect against unauthorized access. OAuth and Kerberos both use a centralized authority system to issue and validate certificates, but this project provides the ability to have the expiry of the access certificates built into the certificates themselves.</p>
 
-<main>
-    
-        <div class="pure-u-1 tags">
-        <h2 id="Posts">Posts</h2>
-        
-            <li id="category-content" style="padding-bottom: 0.6em;"><a href="/SnortLab">Setting up and running Snort on Ubuntu</a></li>
-        
-            <li id="category-content" style="padding-bottom: 0.6em;"><a href="/SecureAuthCert">Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates</a></li>
-        
-            <li id="category-content" style="padding-bottom: 0.6em;"><a href="/AMSIProj">Powershell AMSI Lab - evading using obfuscation and detection POC</a></li>
-        
-        </div>
-    
-    <br />
-    <br />
-</main>
+<p>CBC (Cipher Block Chaining) is a type of block cipher encryption which uses a random hash to encrypt the data stored in the certificates. This ensures that the data is secure and that each certificate is unique, making it difficult to tamper with. This is an important feature as it helps to protect the data stored in the certificates and helps to ensure that they can only be used for the specified time period.</p>
 
-    </div>
+<p>Overall, this project provides a secure and reliable way of granting access to services and websites, with the added security of a CBC block cipher and the ability to set expiry dates for each certificate. It is a great way to ensure that access is only granted for a specified amount of time, without relying on a centralized authority system.</p>
 
+<p>example of certificate generation:</p>
+
+<p><img src="/assets/secureauthcert1.png" alt="SecureAuthCert running" /></p>
+
+<p>Link to My Github Project - <a href="https://github.com/KeepCrispy/SecureAuthCert">SecureAuthCert</a></p>
+
+
+    </div><div id="author">
+    <h3>About
+        AreWhyW</h3>
+    <img src="assets/profile.png" alt="Photo of AreWhyW"/>
+    <p>Hi there, I'm a security engineer and researcher.  I have a background in software engineering, so I am familiar with developing secure code, and have experience in conducting code reviews and application security testing.</p>
+</div><a class="u-url" href="/SecureAuthCert" hidden></a>
 </article><hr/>
 
 <footer class="footer">
