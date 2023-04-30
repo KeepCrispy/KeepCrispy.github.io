@@ -177,7 +177,7 @@
 
 <p>Obfuscation techniques include randomizing variable names, padding with more logic and inserting wrapper logic around the executed scripts. Because of the small file size requirement for most payloads to fly undetected when logged, it is likely that the core execution steps are unchanged to keep things compact. Thus even if the variable lengths changes, the logical pattern of function calls, and assigning variable values are likely unchanged when additional information is padded on. Making it somewhat trivial to flag by scanning the program for execution logic patterns.</p>
 
-<p>I’ve wrote a simple <a href="https://github.com/KeepCrispy/Linear-Content-Scanner">POC Linear-Content-Scanner</a> to test this idea. Feel free to rift off the idea, though I would recommend using a more robust DevSecOps solution.</p>
+<p>I’ve wrote a simple <a href="https://github.com/KeepCrispy/BlueWyvern">POC BlueWyvern Scanner</a> to use Regex to catch obfuscated/malicious code that yara is not designed to do.</p>
 
 <p>It is always good practice to be engaging in DevSecOps to ensure the deployment pipeline and environments are monitored for integrity.</p>
 
