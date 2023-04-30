@@ -151,21 +151,15 @@
 
 <p>LeoX also made a great POC called <a href="https://github.com/pr0xy-8L4d3/EvilRAT">EvilRat</a> for his writeup and it does the job to test for this vulnerability.</p>
 
-<p>Some could argue that it’s just some obfuscated code and can easily be identified using definitions profiling. The problem though is much deeper, as any developer would know the same code can be designed with different flavours, some more efficient than others. Than there’s the problem that a complex shell can be made out of many different variables, and logic can always be obfuscated with purposely placed bad code design.</p>
+<p>Even though obfuscated code can easily be identified using definitions profiling. The problem though is much deeper, as anyone with programming experience would know that the same code can be designed with different nuances. Than there’s the problem that a complex shell can be made out of many different variables, and logic can always be obfuscated with purposely placed bad code design.</p>
 
-<p>So what happens when you obfuscate the code so much so that it’s unrecognizable? What if you have variables of varying lengths, comprised of numbers, underscore and alphabets?</p>
+<p>The possibilities are endless and it’s a recipe for disaster.</p>
 
-<p>What if your shell script execution order, and variable names are always changing? What if you employ alternate function calls to your methods? or add replace random error catchers?</p>
+<p>LeoX and Panagiotis discovered a gaping vulnerability that at present can be exploited using very simple obscuration with basic string manipulation, all without the need of heavy lifting red team tools.</p>
 
-<p>It’s a recipe for disaster and the possibilities for exploiting this is almost limitless.</p>
+<p>If a threat actor took advantage of this, their powershell scripts will easily fly under the radar. This means, until this is patched, it’s crucial to review external apis being used, harden your network infrastructure, and make sure your systems are properly configured with good access control.</p>
 
-<p>LeoX and Panagiotis discovered a gaping vulnerability that at present can be exploited using very simple obscuration without the need of heavy lifting Red Team tools.</p>
-
-<p>On top of that, it makes it super easy to implement a randomized file obscurator using basic programming string manipulation.</p>
-
-<p>If a threat actor took advantage of this, their powershell scripts will easily fly under the radar. This means, until this is patched, it’s crucial to harden your network infrastructure and make sure it’s properly configured with good access control.</p>
-
-<p>Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab.</p>
+<p>Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab. This was done with all defender features turned on.</p>
 
 <p><img src="/assets/launchpsx_amsi1.png" alt="psx running custom payload" /></p>
 
