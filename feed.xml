@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-30T16:20:13-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Keeping it Crispy</title><subtitle>AreWhyW, software engineer exploring security research</subtitle><author><name>AreWhyW</name></author><entry><title type="html">Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates</title><link href="http://localhost:4000/SecureAuthCert" rel="alternate" type="text/html" title="Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates" /><published>2023-04-28T00:00:00-07:00</published><updated>2023-04-28T00:00:00-07:00</updated><id>http://localhost:4000/SecureAuthCert</id><content type="html" xml:base="http://localhost:4000/SecureAuthCert">&lt;p&gt;In this project, I wanted to explore the use of a CBC (Cipher Block Chaining) block cipher to generate encrypted certificates with customizable expiry dates. This system creates a primary server authority certificate which is then used to generate additional access certificates. This provides a secure and reliable way of granting access to services and ensuring that the access is only granted for a specified amount of time.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-01T12:42:16-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Keeping it Crispy</title><subtitle>AreWhyW, software engineer exploring security research</subtitle><author><name>AreWhyW</name></author><entry><title type="html">Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates</title><link href="http://localhost:4000/SecureAuthCert" rel="alternate" type="text/html" title="Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates" /><published>2023-04-28T00:00:00-07:00</published><updated>2023-04-28T00:00:00-07:00</updated><id>http://localhost:4000/SecureAuthCert</id><content type="html" xml:base="http://localhost:4000/SecureAuthCert">&lt;p&gt;In this project, I wanted to explore the use of a CBC (Cipher Block Chaining) block cipher to generate encrypted certificates with customizable expiry dates. This system creates a primary server authority certificate which is then used to generate additional access certificates. This provides a secure and reliable way of granting access to services and ensuring that the access is only granted for a specified amount of time.&lt;/p&gt;
 
 &lt;p&gt;Access granting certificates are an important part of our digital security and are used to control access to services, websites, and other online resources. They are often used in authentication protocols such as OAuth and Kerberos to help protect against unauthorized access. OAuth and Kerberos both use a centralized authority system to issue and validate certificates, but this project provides the ability to have the expiry of the access certificates built into the certificates themselves.&lt;/p&gt;
 
@@ -108,27 +108,31 @@ sudo apt install snort&lt;/p&gt;
 
 &lt;p&gt;The Anti-Malware Scan Interface (AMSI) is a security technology built into the Windows 10 operating system. This interface serves as an open platform for allowing antivirus software to interact with Windows 10, allowing the antivirus program to detect and respond to malicious code. This helps to protect users from malicious software and provide a safer computing environment. AMSI is an essential tool for antivirus programs, as it allows them to detect and block malicious code more effectively. The interface also allows for more accurate detection of malicious code and provides more detailed information about the threats that are detected. This allows antivirus programs to more effectively protect users from threats, as well as provide a more secure computing experience.&lt;/p&gt;
 
-&lt;p&gt;If you look closely into Anti-Malware Scan Interface (AMSI) evasion vulnerabilities published over the years, extensive work has been put into this. For example, I have looked into and tried to replicate some of these findings such as trying to encrypt the payload and decrypting them in memory inside PowerShell. I have also looked into splitting up the payload scripts and recombining them, which has been patched by Microsoft to prevent this attack vector. I have also looked into different PowerShell encoding techniques using open source tools. I also tried embedding the payload inside another executable, and found that the AMSI will no longer be able to catch the embedded code from being copied. However in memory, it will still flag it when executed.&lt;/p&gt;
+&lt;p&gt;If you look closely into Anti-Malware Scan Interface (AMSI) evasion vulnerabilities published over the years, extensive work has been put into this. Threat actors have developed several techniques to bypass AMSI detection. These techniques include encrypting the payload and decrypting it in memory inside PowerShell, splitting up the payload scripts and recombining them, and using different PowerShell encoding techniques. Additionally, attackers can embed the payload inside another executable, which will not be caught by AMSI until the executable is executed.&lt;/p&gt;
 
-&lt;p&gt;All these techniques were used by threat actors to bypass AMSI detection and it is important to be aware of them in order to understand attack vectors.&lt;/p&gt;
+&lt;p&gt;All these techniques were used by threat actors to bypass AMSI detection and it is important to be aware of them in order to understand how attackers can fly under the radar.&lt;/p&gt;
 
-&lt;p&gt;LeoX Aka ProxyBlade wrote a great detailed write-up on his findings for AMSI detection and his trial and error process. &lt;a href=&quot;https://medium.com/bugbountywriteup/how-i-am-winning-battle-with-windows-10-and-11-security-and-avoiding-detection-6ea9f954b2a7&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;link to his write-up&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Panagiotis Chartas, a well known Security Researcher, made a great &lt;a href=&quot;https://www.youtube.com/watch?v=tGFdmAh_lXE&quot;&gt;video guide on obfuscation techniques&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Panagiotis Chartas also made a great &lt;a href=&quot;https://www.youtube.com/watch?v=tGFdmAh_lXE&quot;&gt;video guide on obfuscation techniques&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;He also posted a great resource on his github: &lt;a href=&quot;https://github.com/t3l3machus/PowerShell-Obfuscation-Bible&quot;&gt;Powershell Obfuscation Bible&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Based on their findings and testing for different encryptions, seems that AMSI now scans for the code’s content for anything suspicious before it is executed.&lt;/p&gt;
+&lt;p&gt;Based on his findings we know that that AMSI isn’t quite able to catch obfuscated powershell code just yet.&lt;/p&gt;
 
-&lt;p&gt;LeoX also made a great POC called &lt;a href=&quot;https://github.com/pr0xy-8L4d3/EvilRAT&quot;&gt;EvilRat&lt;/a&gt; for his writeup and it does the job to test for this vulnerability.&lt;/p&gt;
+&lt;p&gt;Even though obfuscated code can easily be identified using definitions profiling. The problem though is much deeper, as anyone with programming experience would know that the same code can be easily redesigned with different nuances.&lt;/p&gt;
 
-&lt;p&gt;Even though obfuscated code can easily be identified using definitions profiling. The problem though is much deeper, as anyone with programming experience would know that the same code can be designed with different nuances. Than there’s the problem that a complex shell can be made out of many different variables, and logic can always be obfuscated with purposely placed bad code design.&lt;/p&gt;
+&lt;p&gt;The possibilities of obfucation are endless and it’s a recipe for disaster.&lt;/p&gt;
 
-&lt;p&gt;The possibilities are endless and it’s a recipe for disaster.&lt;/p&gt;
+&lt;p&gt;Panagiotis findings into this vulnerability means that, at present, it can be exploited using very simple obscuration with basic string manipulation, all without the need of external tools.&lt;/p&gt;
 
-&lt;p&gt;LeoX and Panagiotis discovered a gaping vulnerability that at present can be exploited using very simple obscuration with basic string manipulation, all without the need of heavy lifting red team tools.&lt;/p&gt;
+&lt;p&gt;If a threat actor took advantage of this, their powershell scripts will easily fly under the radar.&lt;/p&gt;
 
-&lt;p&gt;If a threat actor took advantage of this, their powershell scripts will easily fly under the radar. This means, until this is patched, it’s crucial to review external apis being used, harden your network infrastructure, and make sure your systems are properly configured with good access control.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remediation Strategies&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab. This was done with all defender features turned on.&lt;/p&gt;
+&lt;p&gt;In order to mitigate the threat of malicious code bypassing AMSI detection, it is important to perform security audits on APIs being used, harden your network infrastructure, and make sure your systems are properly configured with good access control. Additionally, it is important to regularly update antivirus software and perform regular security audits and patching of the system.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Pentesting Screenshots&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab. This was done with antivirus scans turned on.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/launchpsx_amsi1.png&quot; alt=&quot;psx running custom payload&quot; /&gt;&lt;/p&gt;
 
@@ -136,11 +140,15 @@ sudo apt install snort&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/customps_amsi1.png&quot; alt=&quot;reverse&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Final thoughts on remdiation strategies&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;My thoughts on remdiation strategies&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Obfuscation techniques include randomizing variable names, padding with more logic and inserting wrapper logic around the executed scripts. Because of the small file size requirement for most payloads to fly undetected when logged, it is likely that the core execution steps are unchanged to keep things compact. Thus even if the variable lengths changes, the logical pattern of function calls, and assigning variable values are likely unchanged when additional information is padded on. Making it somewhat trivial to flag by scanning the program for execution logic patterns.&lt;/p&gt;
+&lt;p&gt;Obfuscation techniques include randomizing variable names, padding with more logic and inserting wrapper logic around the executed scripts. Because of the small file size requirement for most payloads to fly undetected when logged, it is likely that the core execution steps are unchanged to keep things compact. Thus even if the variable lengths changes, the logical pattern of function calls, and assigning variable values are likely unchanged when additional information is padded on. Making it somewhat possible to flag by scanning the program for execution logic patterns.&lt;/p&gt;
 
-&lt;p&gt;I’ve wrote a simple &lt;a href=&quot;https://github.com/KeepCrispy/BlueWyvern&quot;&gt;POC BlueWyvern Scanner&lt;/a&gt; to use Regex to catch obfuscated/malicious code that yara is not designed to do.&lt;/p&gt;
+&lt;p&gt;I’ve wrote a simple opensource &lt;a href=&quot;https://github.com/KeepCrispy/BlueWyvern&quot;&gt;POC BlueWyvern Scanner&lt;/a&gt; to use Regex to catch obfuscated and some possibly malicious code that would require some deeper knowledge of yara to perform.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Best Practices for Users&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In order to protect their systems from malicious code, users should follow best practices such as using strong passwords, avoiding suspicious links and downloads, and regularly checking server and operating system access logs. Additionally, users should be aware of the latest threats and tricks attackers use to bypass security measures.&lt;/p&gt;
 
 &lt;p&gt;It is always good practice to be engaging in DevSecOps to ensure the deployment pipeline and environments are monitored for integrity.&lt;/p&gt;
 

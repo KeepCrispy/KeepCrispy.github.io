@@ -139,27 +139,31 @@
 
 <p>The Anti-Malware Scan Interface (AMSI) is a security technology built into the Windows 10 operating system. This interface serves as an open platform for allowing antivirus software to interact with Windows 10, allowing the antivirus program to detect and respond to malicious code. This helps to protect users from malicious software and provide a safer computing environment. AMSI is an essential tool for antivirus programs, as it allows them to detect and block malicious code more effectively. The interface also allows for more accurate detection of malicious code and provides more detailed information about the threats that are detected. This allows antivirus programs to more effectively protect users from threats, as well as provide a more secure computing experience.</p>
 
-<p>If you look closely into Anti-Malware Scan Interface (AMSI) evasion vulnerabilities published over the years, extensive work has been put into this. For example, I have looked into and tried to replicate some of these findings such as trying to encrypt the payload and decrypting them in memory inside PowerShell. I have also looked into splitting up the payload scripts and recombining them, which has been patched by Microsoft to prevent this attack vector. I have also looked into different PowerShell encoding techniques using open source tools. I also tried embedding the payload inside another executable, and found that the AMSI will no longer be able to catch the embedded code from being copied. However in memory, it will still flag it when executed.</p>
+<p>If you look closely into Anti-Malware Scan Interface (AMSI) evasion vulnerabilities published over the years, extensive work has been put into this. Threat actors have developed several techniques to bypass AMSI detection. These techniques include encrypting the payload and decrypting it in memory inside PowerShell, splitting up the payload scripts and recombining them, and using different PowerShell encoding techniques. Additionally, attackers can embed the payload inside another executable, which will not be caught by AMSI until the executable is executed.</p>
 
-<p>All these techniques were used by threat actors to bypass AMSI detection and it is important to be aware of them in order to understand attack vectors.</p>
+<p>All these techniques were used by threat actors to bypass AMSI detection and it is important to be aware of them in order to understand how attackers can fly under the radar.</p>
 
-<p>LeoX Aka ProxyBlade wrote a great detailed write-up on his findings for AMSI detection and his trial and error process. <a href="https://medium.com/bugbountywriteup/how-i-am-winning-battle-with-windows-10-and-11-security-and-avoiding-detection-6ea9f954b2a7" target="_blank" rel="noopener noreferrer">link to his write-up</a></p>
+<p>Panagiotis Chartas, a well known Security Researcher, made a great <a href="https://www.youtube.com/watch?v=tGFdmAh_lXE">video guide on obfuscation techniques</a></p>
 
-<p>Panagiotis Chartas also made a great <a href="https://www.youtube.com/watch?v=tGFdmAh_lXE">video guide on obfuscation techniques</a></p>
+<p>He also posted a great resource on his github: <a href="https://github.com/t3l3machus/PowerShell-Obfuscation-Bible">Powershell Obfuscation Bible</a></p>
 
-<p>Based on their findings and testing for different encryptions, seems that AMSI now scans for the code’s content for anything suspicious before it is executed.</p>
+<p>Based on his findings we know that that AMSI isn’t quite able to catch obfuscated powershell code just yet.</p>
 
-<p>LeoX also made a great POC called <a href="https://github.com/pr0xy-8L4d3/EvilRAT">EvilRat</a> for his writeup and it does the job to test for this vulnerability.</p>
+<p>Even though obfuscated code can easily be identified using definitions profiling. The problem though is much deeper, as anyone with programming experience would know that the same code can be easily redesigned with different nuances.</p>
 
-<p>Even though obfuscated code can easily be identified using definitions profiling. The problem though is much deeper, as anyone with programming experience would know that the same code can be designed with different nuances. Than there’s the problem that a complex shell can be made out of many different variables, and logic can always be obfuscated with purposely placed bad code design.</p>
+<p>The possibilities of obfucation are endless and it’s a recipe for disaster.</p>
 
-<p>The possibilities are endless and it’s a recipe for disaster.</p>
+<p>Panagiotis findings into this vulnerability means that, at present, it can be exploited using very simple obscuration with basic string manipulation, all without the need of external tools.</p>
 
-<p>LeoX and Panagiotis discovered a gaping vulnerability that at present can be exploited using very simple obscuration with basic string manipulation, all without the need of heavy lifting red team tools.</p>
+<p>If a threat actor took advantage of this, their powershell scripts will easily fly under the radar.</p>
 
-<p>If a threat actor took advantage of this, their powershell scripts will easily fly under the radar. This means, until this is patched, it’s crucial to review external apis being used, harden your network infrastructure, and make sure your systems are properly configured with good access control.</p>
+<p><strong>Remediation Strategies</strong></p>
 
-<p>Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab. This was done with all defender features turned on.</p>
+<p>In order to mitigate the threat of malicious code bypassing AMSI detection, it is important to perform security audits on APIs being used, harden your network infrastructure, and make sure your systems are properly configured with good access control. Additionally, it is important to regularly update antivirus software and perform regular security audits and patching of the system.</p>
+
+<p><strong>Pentesting Screenshots</strong></p>
+
+<p>Here is a simple POC of an obfuscated shell encapsulated in an exe runtime that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab. This was done with antivirus scans turned on.</p>
 
 <p><img src="/assets/launchpsx_amsi1.png" alt="psx running custom payload" /></p>
 
@@ -167,11 +171,15 @@
 
 <p><img src="/assets/customps_amsi1.png" alt="reverse" /></p>
 
-<p><strong>Final thoughts on remdiation strategies</strong></p>
+<p><strong>My thoughts on remdiation strategies</strong></p>
 
-<p>Obfuscation techniques include randomizing variable names, padding with more logic and inserting wrapper logic around the executed scripts. Because of the small file size requirement for most payloads to fly undetected when logged, it is likely that the core execution steps are unchanged to keep things compact. Thus even if the variable lengths changes, the logical pattern of function calls, and assigning variable values are likely unchanged when additional information is padded on. Making it somewhat trivial to flag by scanning the program for execution logic patterns.</p>
+<p>Obfuscation techniques include randomizing variable names, padding with more logic and inserting wrapper logic around the executed scripts. Because of the small file size requirement for most payloads to fly undetected when logged, it is likely that the core execution steps are unchanged to keep things compact. Thus even if the variable lengths changes, the logical pattern of function calls, and assigning variable values are likely unchanged when additional information is padded on. Making it somewhat possible to flag by scanning the program for execution logic patterns.</p>
 
-<p>I’ve wrote a simple <a href="https://github.com/KeepCrispy/BlueWyvern">POC BlueWyvern Scanner</a> to use Regex to catch obfuscated/malicious code that yara is not designed to do.</p>
+<p>I’ve wrote a simple opensource <a href="https://github.com/KeepCrispy/BlueWyvern">POC BlueWyvern Scanner</a> to use Regex to catch obfuscated and some possibly malicious code that would require some deeper knowledge of yara to perform.</p>
+
+<p><strong>Best Practices for Users</strong></p>
+
+<p>In order to protect their systems from malicious code, users should follow best practices such as using strong passwords, avoiding suspicious links and downloads, and regularly checking server and operating system access logs. Additionally, users should be aware of the latest threats and tricks attackers use to bypass security measures.</p>
 
 <p>It is always good practice to be engaging in DevSecOps to ensure the deployment pipeline and environments are monitored for integrity.</p>
 
