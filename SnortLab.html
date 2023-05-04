@@ -132,10 +132,10 @@
         Apr 28, 2023
     </time>&#8239;
     <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">By: AreWhyW</span></span>&#8239;|&#8239;<a href="/tags/#Snort">#Snort</a> &#8239;<a href="/tags/#EDR">#EDR</a> &#8239;<a href="/tags/#DevSecOps">#DevSecOps</a> &#8239;</p></header>
+        <span itemprop="name">By: AreWhyW</span></span>&#8239;|&#8239;<a href="/tags/#Snort">#Snort</a> &#8239;<a href="/tags/#IDPS">#IDPS</a> &#8239;<a href="/tags/#WAF">#WAF</a> &#8239;<a href="/tags/#DevSecOps">#DevSecOps</a> &#8239;</p></header>
 
     <div articlebody" class="post-body itemprop=">
-        <p>Snort can be considered an EDR (Endpoint Detection and Response) system. An EDR system is a type of security monitoring system that is used to detect and respond to malicious activity on a network. Snort uses a combination of rules and signatures to detect malicious behavior, and can be used to alert system administrators of suspicious activity.</p>
+        <p>Snort is an intrusion detection and prevention system (IDPS), and can be configured to be used as a WAF(Web Application Firewall) as well An EDR system is a type of security monitoring system that is used to detect and respond to malicious activity on a network. Snort uses a combination of rules and signatures to detect malicious behavior, and can be used to alert system administrators of suspicious activity.</p>
 
 <p>Today, I’m going to share my knowledge on setting up Snort! Snort is a powerful tool for intrusion detection and prevention. I will explain the steps needed to setup Snort on your network and walk you through configuring snort and testing your setup. I’ll also provide helpful tips and tricks that will help you get the most out of Snort.</p>
 
@@ -223,6 +223,34 @@ sudo apt install snort</p>
 <p><img src="/assets/snort5.png" alt="snort running" /></p>
 
 <p>Snort outputs alerts in the terminal when it detects suspicious activity on a network. This could be anything from a malicious scan to an attack attempt. The output is a text-based alert that includes information such as the source and destination IP addresses, the protocol used, and any related alert message.</p>
+
+<p>#Snort as a WAF</p>
+
+<p>Web application firewalls (WAFs) are used to protect web applications from malicious traffic and requests. They can detect and block malicious traffic and filter out malicious requests, such as those for SQL injection and cross-site scripting attacks. WAFs are becoming increasingly popular as more organizations move their applications and data to the cloud. By using a WAF, organizations can ensure that their applications and data are secure from malicious actors.</p>
+
+<p>Snort IPS mode stands for Intrusion Prevention System mode. This mode allows Snort to take action when it detects suspicious activity, such as blocking malicious traffic or filtering out malicious requests. It is used to protect networks from malicious actors and prevent the exploitation of security vulnerabilities.</p>
+
+<p>The IPS mode can be activated when starting Snort using “-Q –daq afpacket” followed by the interfaces arguement “-i eth0:eth1” where eth0 and eth1 are the network interfaces you’d like to join.</p>
+
+<p>With IPS enabled, you’ll be able to add some simple rules using regular expression to the snort config file to drop harmful traffic</p>
+
+<p>Example - to block SQL injection rule</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">drop</span> <span class="nx">TCP</span> <span class="nx">any</span> <span class="nx">any</span> <span class="o">-&gt;</span> <span class="nx">your_target_server_ip</span> <span class="mi">80</span> <span class="p">(</span><span class="nx">flow</span><span class="p">:</span><span class="nx">to_server</span><span class="p">;</span> <span class="nl">content</span><span class="p">:</span><span class="o">!</span><span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">;</span> <span class="nx">nocase</span><span class="p">;</span>
+<span class="nx">pcre</span><span class="o">=</span><span class="dl">"</span><span class="s2">[</span><span class="se">\</span><span class="s2">'</span><span class="se">\"\</span><span class="s2">;</span><span class="se">\</span><span class="s2">:</span><span class="se">\</span><span class="s2">|</span><span class="se">\</span><span class="s2">&amp;</span><span class="se">\</span><span class="s2">$</span><span class="se">\</span><span class="s2">%</span><span class="se">\</span><span class="s2">@</span><span class="se">\\\</span><span class="s2">/&lt;&gt;()+,]</span><span class="dl">"</span><span class="p">)</span></code></pre></figure>
+
+<p>Above rule will filter:</p>
+
+<ul>
+  <li>From any Source IP</li>
+  <li>From any source Port</li>
+  <li>Destination IP is your_target_server_ip, you need to change this</li>
+  <li>Destination Port is 80 (HTTP)</li>
+  <li>Content should have value “GET “ – can be changed to “POST”</li>
+  <li>Word “nocase” specifies matching is not case sensitive</li>
+  <li>filter based on Regular expression mentioned in “pcre=”['"\;:|\&amp;$\%\@\\/&lt;&gt;()+,]” will not allow ‘ “ ; : | &amp;
+@ \ / &lt; &gt; ( ) + , characters in request.</li>
+</ul>
 
 <p>Here are additional resources and documentation for further customizing snort.</p>
 <ul>
