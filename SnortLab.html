@@ -135,7 +135,7 @@
         <span itemprop="name">By: AreWhyW</span></span>&#8239;|&#8239;<a href="/tags/#Snort">#Snort</a> &#8239;<a href="/tags/#IDPS">#IDPS</a> &#8239;<a href="/tags/#WAF">#WAF</a> &#8239;<a href="/tags/#DevSecOps">#DevSecOps</a> &#8239;</p></header>
 
     <div articlebody" class="post-body itemprop=">
-        <p>Snort is an intrusion detection and prevention system (IDPS), and can be configured to be used as a Web Application Firewall(WAF). Intrusion detection and prevention systems (IDPS) are used to detect and protect networks from malicious traffic and requests. They are able to detect suspicious activity, such as malicious requests and traffic, and take action to block the malicious activity before it reaches its destination. IDPS systems are an important part of network security, as they can prevent malicious actors from exploiting security vulnerabilities.</p>
+        <p>Snort is an Intrusion Detection and Prevention System (IDPS) designed to protect networks against malicious traffic and requests. As it is capable of detecting suspicious activity, such as malicious requests or traffic, it is able to take action to block such activities before they reach their destinations. IDPS systems are an integral part of any security infrastructure, as they protect against malicious actors exploiting potential security vulnerabilities. Furthermore, Snort can also be configured to act as a Web Application Firewall (WAF).</p>
 
 <p>Today, I’m going to share my knowledge on setting up Snort! Snort is a powerful tool for intrusion detection and prevention. I will explain the steps needed to setup Snort on your network and walk you through configuring snort and testing your setup. I’ll also provide helpful tips and tricks that will help you get the most out of Snort.</p>
 
@@ -161,9 +161,7 @@ sudo apt install snort</p>
   <li>net.ipv4.conf.all.rp_filter = 1</li>
 </ul>
 
-<p>The rp_filter setting in the sysctl.conf file determines whether or not the kernel will accept reverse path filtering on the network traffic. Reverse path filtering ensures that incoming packets are coming from the same source as the reply packets. This is important for network security, as it helps to prevent malicious packets from entering the network. We want this turned on.</p>
-
-<p>We want to turn on the rp_filter setting in the sysctl.conf file for snort because it helps to protect against malicious packets entering the network. By enabling reverse path filtering, snort can more accurately detect and respond to malicious activity on the network, as it can detect when incoming packets are not from the same source as the reply packets.</p>
+<p>The sysctl.conf file’s “rp_filter” setting is an important component of network security, as it enables reverse path filtering. By allowing reverse path filtering, the kernel can determine whether incoming packets originate from the same source as the corresponding reply packets. Thus, turning on this setting helps to block malicious packets from entering the network. For this reason, it is essential to activate the rp_filter setting in the sysctl.conf file for Snort in order to provide increased protection against malicious activity on the network.</p>
 
 <p><img src="/assets/snort1.png" alt="systemctl config" /></p>
 
@@ -195,7 +193,7 @@ sudo apt install snort</p>
 
 <p>reading through the config you will come across some preprocessor and decoder configurations as well.</p>
 
-<p>The Snort decoder and preprocessors are responsible for decoding and processing packets as they are received. The decoder is responsible for breaking down the packets into their individual headers, while the preprocessors perform tasks such as stream reassembly, protocol normalization, and port scanning detection. Together, they allow snort to accurately detect and respond to malicious activity.</p>
+<p>The Snort decoder and preprocessors fulfill a vital role in the network security infrastructure, providing the capacity to dissect and analyze packets as they are received. The decoder dissects the packets into their applicable protocol headers while the preprocessors further analyse the data, performing such functions as stream reassembly, protocol normalization and port scanning detection. In essence, the combination of these capabilities allows Snort to detect and respond accurately to malicious activity.</p>
 
 <p>Finally the part that makes snort shine is the output plugin settings. The output plugin allows you to automate piping alerts to your desired file/webapp for logging purposes</p>
 
@@ -222,13 +220,13 @@ sudo apt install snort</p>
 
 <p><img src="/assets/snort5.png" alt="snort running" /></p>
 
-<p>Snort outputs alerts in the terminal when it detects suspicious activity on a network. This could be anything from a malicious scan to an attack attempt. The output is a text-based alert that includes information such as the source and destination IP addresses, the protocol used, and any related alert message.</p>
+<p>Snort is now ready to generate text-based alerts when potentially malicious activity is detected on a network. These alerts provide essential details, such as source and destination IP addresses, port numbers, and applicable alert messages, about the traffic that may warrant attention.</p>
 
 <p>#Snort as a WAF</p>
 
-<p>Web application firewalls (WAFs) are used to protect web applications from malicious traffic and requests. They can detect and block malicious traffic and filter out malicious requests, such as those for SQL injection and cross-site scripting attacks. WAFs are becoming increasingly popular as more organizations move their applications and data to the cloud. By using a WAF, organizations can ensure that their applications and data are secure from malicious actors.</p>
+<p>Web Application Firewalls (WAFs) are becoming an invaluable tool for organizations to protect their applications and data as they increasingly migrate these assets to the cloud. WAFs are capable of detecting and blocking malicious traffic, as well as filtering out malicious requests such as those associated with SQL injection and cross-site scripting attacks, thus providing an effective defense against malicious actors.</p>
 
-<p>Snort IPS mode stands for Intrusion Prevention System mode. This mode allows Snort to take action when it detects suspicious activity, such as blocking malicious traffic or filtering out malicious requests. It is used to protect networks from malicious actors and prevent the exploitation of security vulnerabilities.</p>
+<p>Additionally, Snort IPS mode provides an added layer of security, allowing it to take action against suspicious behaviors including blocking malicious traffic and filtering out malicious requests. Ultimately, WAFs and Snort’s IPS mode ensure that an organization’s applications and data remain secure against malicious actors.</p>
 
 <p>The IPS mode can be activated when starting Snort using “-Q –daq afpacket” followed by the interfaces arguement “-i eth0:eth1” where eth0 and eth1 are the network interfaces you’d like to join.</p>
 
