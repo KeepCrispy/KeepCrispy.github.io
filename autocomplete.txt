@@ -1,1 +1,1 @@
-Setting up and running Snort on Ubuntu;Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates;Powershell AMSI Lab - evading using obfuscation and detection POC;
+Setting up and running Snort on Ubuntu;Using Cipher Block Chaining(CBC cipher) to Encrypt Access Granting Certificates;Powershell AMSI Lab - evading using obfuscation;
