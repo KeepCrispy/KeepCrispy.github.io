@@ -135,27 +135,23 @@
         <span itemprop="name">By: 4reW</span></span>&#8239;|&#8239;<a href="/tags/#AMSI">#AMSI</a> &#8239;<a href="/tags/#Powershell">#Powershell</a> &#8239;</p></header>
 
     <div articlebody" class="post-body itemprop=">
-        <p>I’m pretty sure many developers like me have came across their code being flagged by windows defender as a virus or malware strictly because it was just doing its job accessing system functions or making a TCP connection to the network service. Having been frustrated by this many times, I wanted to figure out why my legit working code is being flagged with a false positive, while threat actors are able to bypass this security completely.</p>
+        <p>Many developers have likely encountered the frustration of having their code flagged as a virus or malware by Windows Defender, even when the code is legitimate and performing necessary functions like accessing system functions or making TCP connections. It becomes even more frustrating when threat actors are able to bypass this security.</p>
 
-<p>The Anti-Malware Scan Interface (AMSI) is a security technology built into the Windows 10 operating system. This interface serves as an open platform for allowing antivirus software to interact with Windows 10, allowing the antivirus program to detect and respond to malicious code. This helps to protect users from malicious software and provide a safer computing environment. AMSI is an essential tool for antivirus programs, as it allows them to detect and block malicious code more effectively. The interface also allows for more accurate detection of malicious code and provides more detailed information about the threats that are detected. This allows antivirus programs to more effectively protect users from threats, as well as provide a more secure computing experience.</p>
+<p>To address these concerns, Windows 10 introduced the Anti-Malware Scan Interface (AMSI), which allows antivirus software to interact with the operating system and detect and respond to malicious code. AMSI is an essential tool for antivirus programs, offering more effective detection and blocking of malicious code, as well as providing detailed information about detected threats. It ultimately aims to protect users and create a safer computing environment.</p>
 
-<p>If you look closely into Anti-Malware Scan Interface (AMSI) evasion vulnerabilities published over the years, extensive work has been put into this. Threat actors have developed several techniques to bypass AMSI detection. These techniques include encrypting the payload and decrypting it in memory inside PowerShell, splitting up the payload scripts and recombining them, and using different PowerShell encoding techniques. Additionally, attackers can embed the payload inside another executable, which will not be caught by AMSI until the executable is executed.</p>
+<p>Despite the presence of AMSI, threat actors have invested significant effort into developing techniques to bypass its detection. These techniques include encrypting and decrypting payload scripts in memory within PowerShell, splitting up and recombining payload scripts, using various PowerShell encoding techniques, and embedding the payload within another executable. Aware of these techniques, it is important to understand how attackers can evade AMSI detection.</p>
 
-<p>All these techniques were used by threat actors to bypass AMSI detection and it is important to be aware of them in order to understand how attackers can fly under the radar.</p>
-
-<p>Panagiotis Chartas, a well known Security Researcher, made a great <a href="https://www.youtube.com/watch?v=tGFdmAh_lXE">video guide on obfuscation techniques</a></p>
-
-<p>He also posted a great resource on his github: <a href="https://github.com/t3l3machus/PowerShell-Obfuscation-Bible">Powershell Obfuscation Bible</a></p>
+<p>Digging into the web on AMSI evasion research, there have been comprehensive resource on PowerShell obfuscation techniques published over the years. These findings suggest that AMSI currently struggles with detecting obfuscated PowerShell code.</p>
 
 <p>Based on his findings and evasion examples, we can conclude that that AMSI isn’t quite able to catch obfuscated powershell code at the moment.</p>
 
-<p>Even though obfuscated code can be identified using definitions profiling in Yara, the problem though is much deeper, as anyone with some programming experience would know that the same code can be easily redesigned with different nuances and thus allow for an endless possibility of payloads to be created.</p>
+<p>While obfuscated code can be identified through profiling using tools like Yara, the issue runs deeper. Any code can be redesigned with different nuances, creating countless possibilities for creating payloads. Threat actors can exploit this to allow their PowerShell scripts to bypass detection.</p>
 
-<p>If a threat actor took advantage of this, their powershell scripts will, in most cases, easily fly under the radar.</p>
+<p>The article also includes a proof of concept (POC) showcasing an obfuscated shell payload used to gain remote access in a custom lab environment, despite antivirus scans being enabled on the operating system.</p>
 
 <p><strong>Remediation Strategies</strong></p>
 
-<p>In order to mitigate the threat of malicious code bypassing AMSI detection, it is important to perform security audits on APIs being used, harden your network infrastructure, and make sure your systems are properly configured with good access control. Additionally, it is important to regularly perform penetration tests to identify network vulnerabilities, and update antivirus software and perform regular audits and patching of the network environments.</p>
+<p>To mitigate the risk of malicious code bypassing AMSI, it is important to conduct security audits on APIs, strengthen network infrastructure, properly configure systems with good access control, conduct regular penetration tests to identify vulnerabilities, update antivirus software, and perform regular audits and patching of the network environment.</p>
 
 <p><strong>Pentesting Screenshots</strong></p>
 
@@ -175,19 +171,15 @@
 
 <p>This tool uses regex to detect code execution patterns, including suspects of malicious code, malicious URLs, IP addresses, file attachments, and hidden executable calls.</p>
 
-<p>To identify multiple rules and see if there’s common features, the tool uses a pattern identification algorithm commonly used in analysising common ancestor genetics to find common code execution patterns when given multiple sources to profile. The finite machine regex-based string search can detect multiple requirements in a single line sweep. It’ll also try to detect base64 encoding in files if that’s used to obscure the payload.</p>
+<p>To signature multiple payloads and see if there’s common features, the tool uses a pattern identification algorithm commonly used in analysising common ancestor genetics to find common code execution patterns when given multiple sources to profile. The finite machine regex-based string search can detect multiple requirements in a single line sweep. It’ll also try to detect base64 encoding in files if that’s used to obscure the payload.</p>
 
 <p>This tool can also run in file integrity monitor (FIM) mode, meaning it will scan and log updated files in the target directory. If provided with multiple rules as part of the arguements, it’ll scan for those as well.</p>
 
-<p><strong>Best Practices for Users</strong></p>
+<p><strong>Best Practices for Defense</strong></p>
 
-<p>In order to protect production and internal network systems from incursion, all users should follow best practices such as using strong passwords, avoiding suspicious links and downloads, and regularly checking server and operating system access logs. Additionally, the technology team should also be aware of the latest threats and tricks attackers use to bypass security measures.</p>
+<p>To protect production and internal network systems, users should follow best practices such as employing strong passwords, avoiding suspicious links and downloads, and regularly checking server and operating system access logs. The technology team should also stay informed about the latest threats and tactics used by attackers to bypass security measures. Engaging in penetration tests, application security reviews, and adhering to DevSecOps best practices can minimize the risk of network intrusion.</p>
 
-<p>It is always good practice to be engaging in penetration tests, application security reviews and best DevSecOps practices to minimize the risk of a network intrusion.</p>
-
-<p>Checking server and operating system access logs is a good way to determine if there has been any malicious activity on the system. However, it is important to note that depending on the type of malware used, it may be difficult to detect the malicious activity in the logs.</p>
-
-<p>It is always best to take preventative measures. This can include regular pentests, code review auditing and patching the systems for critical pudates. Additionally, it is important to ensure that users are following best practices when it comes to online security, such as using strong passwords and avoiding suspicious links and downloads.</p>
+<p>Checking server and operating system access logs can help detect malicious activity, but it may be difficult to identify such activity depending on the type of malware used. Taking preventative measures like regular penetration tests, code review audits, and patching critical updates is crucial. Users should also practice online security best practices, including strong passwords and avoiding suspicious links and downloads.</p>
 
 
     </div><div id="author">
