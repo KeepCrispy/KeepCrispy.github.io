@@ -143,8 +143,6 @@
 
 <p>Digging into the web on AMSI evasion research, there have been comprehensive resource on PowerShell obfuscation techniques published over the years. These findings suggest that AMSI currently struggles with detecting obfuscated PowerShell code.</p>
 
-<p>Based on his findings and evasion examples, we can conclude that that AMSI isn’t quite able to catch obfuscated powershell code at the moment.</p>
-
 <p>While obfuscated code can be identified through profiling using tools like Yara, the issue runs deeper. Any code can be redesigned with different nuances, creating countless possibilities for creating payloads. Threat actors can exploit this to allow their PowerShell scripts to bypass detection.</p>
 
 <p>The article also includes a proof of concept (POC) showcasing an obfuscated shell payload used to gain remote access in a custom lab environment, despite antivirus scans being enabled on the operating system.</p>
@@ -155,7 +153,7 @@
 
 <p><strong>Pentesting Screenshots</strong></p>
 
-<p>Here is a simple POC of an obfuscated shell payload that was generated using an obfuscator tool. It is being used to gain remote access in a custom lab environment. Though the antivirus scans were turned on the OS, the payloaded still executed without being detected.</p>
+<p>Here is a simple POC of an obfuscated shell payload that was generated using a obfuscator tool built with variable obfuscation in mind. It is being used to gain remote access in a custom lab environment. Though the antivirus scans are turned on the target, the payloaded still executed without being detected.</p>
 
 <p><img src="/assets/launchpsx_amsi1.png" alt="psx running custom payload" /></p>
 
